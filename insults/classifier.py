@@ -24,17 +24,22 @@ class InsultsSGDRegressor(linear_model.SGDRegressor):
         """
         """
         assert self.max_iter % self.n_iter_per_step == 0
+        print("kwargs")
+        print(self.kwargs)
         linear_model.SGDRegressor.__init__(self,
                                             alpha=self.alpha,
                                             penalty=self.penalty,
+                                            max_iter = self.max_iter,
                                             n_iter=self.n_iter_per_step,
                                             **self.kwargs)
     def fit(self,X,y):
         self.coef_ = None
         self.intercept_ = None
         self.stages_ = []
+        print(self.max_iter)
+        print(self.n_iter)
         for i in range(0,self.max_iter,self.n_iter):
-
+            print(self.coef_)
             if self.coef_ is not None:
                 assert(self.intercept_ is not None)
                 linear_model.SGDRegressor.fit(self,X,y,coef_init=self.coef_,intercept_init=self.intercept_)

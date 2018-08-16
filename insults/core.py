@@ -41,7 +41,9 @@ class Insults(object):
         """
         parser = get_parser() # TODO
         for argset in argsets['production']:
-            run_prediction(parser=parser, args_in=argset, production=True)
+            print(argset)
+            temp = run_prediction(parser=parser, args_in=argset, production=True)
+        return(temp)
 
     @classmethod
     def rate_comment(cls, comment, binary=False):

@@ -61,7 +61,7 @@ def save_model( clf, location=SAVEFILE_LOCATION ):
     save_path = os.path.join(os.path.dirname(__file__), SAVEFILE_LOCATION)
     make_sure_path_exists(save_path)
     save_path = os.path.join(save_path, MODEL_FILENAME)
-    with open(save_path, 'w') as fh:
+    with open(save_path, 'wb') as fh:
         _ = joblib.dump(clf, fh, compress=9)
 
 
@@ -255,4 +255,4 @@ def score():
                                     "public": auc(np.array(public), np.array(pub_guess)),
                                     "private": auc(np.array(private), np.array(priv_guess)),
                                     })
-    print pandas.DataFrame(data, columns=("fn", "score", "public", "private")).sort('score')
+    print(pandas.DataFrame(data, columns=("fn", "score", "public", "private")).sort('score'))

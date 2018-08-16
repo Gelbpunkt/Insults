@@ -109,7 +109,7 @@ def tuning(arguments):
     NUM_CORES = 4 # training on quad-core Mac Pro
     logging.info("Tuning")
     kf = model_selection.KFold(NFOLDS)
-
+    print("Tuning")
     folds = kf.split(train.Insult)
     boolean_folds = []
     for f in folds:
@@ -139,7 +139,7 @@ def tuning(arguments):
                           ])
 
     logging.info('tuning complete')
-
+    print("tuning complete")
     return df
 
 
@@ -148,7 +148,7 @@ def predict(folds, arguments):
     Train on training file, predict on test file.
     """
     logging.info("Starting predictions")
-
+    print(arguments)
     clf = make_pipeline(arguments)
     # work out how long to train for final step.
     clf.steps[-1][-1].max_iter,estimated_score = choose_n_iterations(folds)
@@ -174,7 +174,11 @@ def predict(folds, arguments):
             submission.to_csv(arguments.predictions, index=False)
             logging.info('Saved %s' % arguments.predictions)
 
-    save_model(clf) # Save the classifier
+    try:
+        save_model(clf) # Save the classifier
+    except:
+        return(clf)
+    return(clf)
     logging.info("Finished predictions")
 
 
@@ -189,17 +193,20 @@ def run_prediction(parser=None, args_in=None, production=False):
     if production:
         logging.info('Running prepackaged arguments (%r)' % args_in)
         arguments = parser.parse_args(args_in)
+        print(arguments)
     else:
         logging.info('Using arguments from command line %r' % args_in)
         arguments = args_in
-
+    print("Arguments")
+    print(arguments)
     train,test_examples = initialize(arguments)
     if arguments.tune:
         folds = tuning(arguments)
         save_folds(folds)
     else:
         folds = saved_folds()
-    predict(folds,arguments)
+    print(arguments)
+    return(predict(folds,arguments))
     if arguments.score:
         score()
 
