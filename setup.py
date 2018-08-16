@@ -52,17 +52,17 @@ setup(
 
   packages = find_packages(exclude=['scripts', 'docs', 'tests*']),
 
-  version = '0.1.12',
+  version = '0.1.13',
 
   description = 'Identify insulting comments and users on social media',
 
   long_description=__doc__,
 
-  author = 'Jonathon Belotti',
+  author = 'Jonathon Belotti/Trang Nguyen (python3)',
 
-  author_email = 'jonathon.bel.melbourne@gmail.com',
+  author_email = 'tnguyen@air.org',
 
-  url = 'https://github.com/thundergolfer/Insults', # use the URL to the github repo
+  url = 'https://github.com/nguyentr17/Insults', # use the URL to the github repo
 
   download_url = 'https://github.com/thundergolfer/Insult/tarball/0.1', # I'll explain this in a second
 
@@ -73,16 +73,16 @@ setup(
 
 
   install_requires = [
-        'pyparsing==1.5.6',
-        'python-dateutil==2.4.1',
-        'pytest==3.0.6',
-        'Pytz==2016.7',
-        'scikit-learn==0.18.1',
-        'scipy==0.18.1',
-        'six==1.10.0',
-        'pandas==0.19.2',
-        'futures==2.2.0',
-        'nltk==3.0'
+        'pyparsing',
+        'python-dateutil',
+        'pytest',
+        'Pytz',
+        'scikit-learn',
+        'scipy',
+        'six',
+        'pandas',
+        'futures',
+        'nltk'
   ],
 
   # If there are data files included in your packages that need to be
