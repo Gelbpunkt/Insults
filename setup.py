@@ -116,7 +116,7 @@ setup(
              'Data/Submissions/submission3.csv'
             ],
         'models':
-            ['models/insult_classifier.joblib.pkl']
+            ['models/stored/insult_classifier.joblib.pkl']
     }
 )
 
