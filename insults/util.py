@@ -3,7 +3,7 @@ import errno
 import pandas
 import os
 import numpy as np
-from sklearn.externals import joblib
+import joblib
 import sys
 
 def make_sure_path_exists(path):

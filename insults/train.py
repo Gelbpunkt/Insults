@@ -9,6 +9,8 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 import concurrent.futures
 
+sys.path.append("/")
+
 from insults.util import (data_file,
                           data_directory,
                           log_file,
@@ -224,13 +226,13 @@ if __name__ == "__main__":
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
 
-        logging.basicConfig(filename=log_file('final.log'),mode='w',format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+        logging.basicConfig(filename=log_file('final.log'),filemode='w',format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
         for argset in production_argsets:
             run_prediction(parser=parser,args_in=argset,production=True)
     elif arguments.comptune:
-        logging.basicConfig(filename=arguments.logfile,mode='w',format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+        logging.basicConfig(filename=arguments.logfile,filemode='w',format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
         for argset in tuning_argsets:
             run_prediction(parser=parser,args_in=argset,production=True)
     else:
-        logging.basicConfig(filename=arguments.logfile,mode='w',format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+        logging.basicConfig(filename=arguments.logfile,filemode='w',format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
         run_prediction(parser=parser,args_in=args,production=False)

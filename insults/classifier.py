@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import logging
-from sklearn.externals import joblib
+import joblib
 from sklearn import linear_model
 
 from insults import util
@@ -26,11 +26,11 @@ class InsultsSGDRegressor(linear_model.SGDRegressor):
         assert self.max_iter % self.n_iter_per_step == 0
         print("kwargs")
         print(self.kwargs)
-        linear_model.SGDRegressor.__init__(self,
+        super().__init__(self,
                                             alpha=self.alpha,
                                             penalty=self.penalty,
                                             max_iter = self.max_iter,
-                                            n_iter=self.n_iter_per_step,
+                                            n_iter_no_change=self.n_iter_per_step,
                                             **self.kwargs)
     def fit(self,X,y):
         self.coef_ = None
