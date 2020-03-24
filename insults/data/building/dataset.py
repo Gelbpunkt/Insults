@@ -7,25 +7,25 @@ PATH_TO_HERE = os.path.dirname(os.path.abspath(__file__))
 
 def setup_dataset_file(fp, schema):
     if not os.path.isfile(fp):
-        with open(fp, 'w') as f:
+        with open(fp, "w") as f:
             writer = csv.writer(f)
             writer.writerow(schema)
 
 
 def default_dataset_header():
     return [
-        'Comment',
-        'Date',
-        'Insult',
-        'Usage',
-        'Source',
-        'Score',
-        'Parent Comment',
-        'Grandparent Comment',
-        'Status',
-        'Labels',
-        'Difficulty',
-        'HIT ID'
+        "Comment",
+        "Date",
+        "Insult",
+        "Usage",
+        "Source",
+        "Score",
+        "Parent Comment",
+        "Grandparent Comment",
+        "Status",
+        "Labels",
+        "Difficulty",
+        "HIT ID",
     ]
 
 
@@ -33,24 +33,26 @@ def csv_entry_to_dict(row, csv_header):
     return dict(zip(csv_header, row))
 
 
-class DatasetEntry():
-    DEFAULT_DATASET = os.path.join(PATH_TO_HERE, 'new_dataset.csv')
-    ALLOWED_LABLES = ['racist', 'sexist', 'sarcasm', 'ableist']
-    ALLOWED_STATUS = ['READY', 'SUBMITTED', 'LABELLED']
-    DIFFICULTY = ['easy', 'medium', 'hard', 'impossible']
+class DatasetEntry:
+    DEFAULT_DATASET = os.path.join(PATH_TO_HERE, "new_dataset.csv")
+    ALLOWED_LABLES = ["racist", "sexist", "sarcasm", "ableist"]
+    ALLOWED_STATUS = ["READY", "SUBMITTED", "LABELLED"]
+    DIFFICULTY = ["easy", "medium", "hard", "impossible"]
 
-    def __init__(self,
-                 comment,
-                 datetime,
-                 is_insult,
-                 usage,
-                 source,
-                 score,
-                 parent_comment,
-                 grandparent_comment,
-                 status,
-                 labels=None,
-                 difficulty=None):
+    def __init__(
+        self,
+        comment,
+        datetime,
+        is_insult,
+        usage,
+        source,
+        score,
+        parent_comment,
+        grandparent_comment,
+        status,
+        labels=None,
+        difficulty=None,
+    ):
         self.comment = self._validate_comment(comment)
         self.datetime = self._validate_datetime(datetime)
         self.is_insult = self._validate_is_insult(is_insult)
@@ -70,7 +72,7 @@ class DatasetEntry():
             print("This entry has already been added to '{}'".format(dataset_path))
             return False
 
-        with open(dataset_path, 'a') as f:
+        with open(dataset_path, "a") as f:
             writer = csv.writer(f)
             writer.writerow(self.to_csv_row())
             self.added_to.append(dataset_path)
@@ -79,18 +81,18 @@ class DatasetEntry():
 
     def to_csv_row(self):
         return [
-            self.comment.encode('utf-8'),
-            self.datetime.encode('utf-8'),
-            str(self.is_insult).encode('utf-8'),
-            str(self.usage).encode('utf-8'),
-            self.source.encode('utf-8'),
-            str(self.score).encode('utf-8'),
-            self.parent_comment.encode('utf-8'),
-            self.grandparent_comment.encode('utf-8'),
-            self.status.encode('utf-8'),
-            '+'.join(self.labels).encode('utf-8'),
-            self.difficulty.encode('utf-8'),
-            self.hit_id.encode('utf-8')
+            self.comment.encode("utf-8"),
+            self.datetime.encode("utf-8"),
+            str(self.is_insult).encode("utf-8"),
+            str(self.usage).encode("utf-8"),
+            self.source.encode("utf-8"),
+            str(self.score).encode("utf-8"),
+            self.parent_comment.encode("utf-8"),
+            self.grandparent_comment.encode("utf-8"),
+            self.status.encode("utf-8"),
+            "+".join(self.labels).encode("utf-8"),
+            self.difficulty.encode("utf-8"),
+            self.hit_id.encode("utf-8"),
         ]
 
     def _validate_comment(self, comment):
@@ -106,7 +108,7 @@ class DatasetEntry():
         return dt.strftime("%Y%m%d%H%M%SZ")
 
     def _validate_source(self, source):
-        if source not in set(['reddit']):
+        if source not in set(["reddit"]):
             raise ValueError("{} is not a valid dataset source".format(source))
 
         return source
@@ -116,7 +118,7 @@ class DatasetEntry():
 
     def _validate_is_insult(self, is_insult):
         if is_insult is None:
-            return 'NOT LABELLED'
+            return "NOT LABELLED"
 
         if is_insult is not False and is_insult is not True:
             raise ValueError("'is_insult' must be a boolean")
@@ -125,7 +127,7 @@ class DatasetEntry():
 
     def _validate_a_parent_comment(self, parent_comment):
         if parent_comment is None:
-            parent_comment = ''
+            parent_comment = ""
 
         return self._validate_comment(parent_comment)
 
@@ -143,8 +145,11 @@ class DatasetEntry():
             return ""
 
         if difficulty not in self.DIFFICULTY:
-            raise ValueError("'{}' is not a valid difficulty. Can be {}".format(difficulty,
-                                                                                self.DIFFICULTY))
+            raise ValueError(
+                "'{}' is not a valid difficulty. Can be {}".format(
+                    difficulty, self.DIFFICULTY
+                )
+            )
         return difficulty
 
     def _validate_status(self, status):
@@ -152,6 +157,9 @@ class DatasetEntry():
             raise ValueError("Must specify an entry status")
 
         if status not in self.ALLOWED_STATUS:
-            raise ValueError("'{}' is not a valid status. Can be {}".format(status,
-                                                                            self.ALLOWED_STATUS))
+            raise ValueError(
+                "'{}' is not a valid status. Can be {}".format(
+                    status, self.ALLOWED_STATUS
+                )
+            )
         return status

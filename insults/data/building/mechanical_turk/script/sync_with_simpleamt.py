@@ -3,7 +3,7 @@ import shutil
 
 
 PATH_TO_HERE = os.path.dirname(os.path.abspath(__file__))
-PARENT = os.path.join(PATH_TO_HERE, '..')
+PARENT = os.path.join(PATH_TO_HERE, "..")
 
 
 def copytree(src, dst, symlinks=False, ignore=None):
@@ -19,10 +19,16 @@ def copytree(src, dst, symlinks=False, ignore=None):
                 shutil.copy2(s, d)
 
 
-if __name__ == '__main__':
-    copytree(os.path.join(PARENT, 'hit_templates'),
-             os.path.join(PARENT, 'simple-amt', 'hit_templates'))
-    copytree(os.path.join(PARENT, 'hit_task_properties'),
-             os.path.join(PARENT, 'simple-amt', 'hit_properties'))
-    copytree(os.path.join(PARENT, 'hit_inputs'),
-             os.path.join(PARENT, 'simple-amt', 'hit_inputs'))
+if __name__ == "__main__":
+    copytree(
+        os.path.join(PARENT, "hit_templates"),
+        os.path.join(PARENT, "simple-amt", "hit_templates"),
+    )
+    copytree(
+        os.path.join(PARENT, "hit_task_properties"),
+        os.path.join(PARENT, "simple-amt", "hit_properties"),
+    )
+    copytree(
+        os.path.join(PARENT, "hit_inputs"),
+        os.path.join(PARENT, "simple-amt", "hit_inputs"),
+    )

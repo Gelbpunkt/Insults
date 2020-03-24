@@ -8,16 +8,21 @@ import time
 CURR_FILES_PATH = os.path.dirname(os.path.abspath(__file__))
 
 # Initialise Logger
-logging.basicConfig(filename=os.path.join(CURR_FILES_PATH,
-                                          time.strftime("%Y%m%d_%H%M%S") + "_criteria.log"),
-                    level=logging.DEBUG)
+logging.basicConfig(
+    filename=os.path.join(
+        CURR_FILES_PATH, time.strftime("%Y%m%d_%H%M%S") + "_criteria.log"
+    ),
+    level=logging.DEBUG,
+)
 
-with open(os.path.join(CURR_FILES_PATH, 'default_dataset_criteria.json')) as config_file:
+with open(
+    os.path.join(CURR_FILES_PATH, "default_dataset_criteria.json")
+) as config_file:
     DEFAULT_CONFIG = json.load(config_file)
 
 
 def validate_comment(comment, config=DEFAULT_CONFIG):
-    logging.info("Validating Comment: {}".format(comment.encode('utf-8')))
+    logging.info("Validating Comment: {}".format(comment.encode("utf-8")))
 
     validate_dataset_criteria_config(config)
     comment_len = len(comment)
@@ -38,7 +43,9 @@ def validate_comment(comment, config=DEFAULT_CONFIG):
     try:
         valid_language = detect(comment) in config["allowed_languages"]
     except langdetect.lang_detect_exception.LangDetectException:
-        logging.error("Comment: '{}' caused error in lang detect".format(comment.encode('utf-8')))
+        logging.error(
+            "Comment: '{}' caused error in lang detect".format(comment.encode("utf-8"))
+        )
         return False
 
     return valid_length and valid_language
@@ -62,9 +69,13 @@ def validate_dataset_criteria_config(config):
         raise ValueError("Need to specify a number for 'max_comment_length' in config")
 
     if "allowed_languages" not in config:
-        raise ValueError("Need to specify a list of valid language codes as 'allowed_languages'")
+        raise ValueError(
+            "Need to specify a list of valid language codes as 'allowed_languages'"
+        )
 
     if not type(config["allowed_languages"]) is list:
-        raise ValueError("'allowed_languages' needs to be a list of valid language codes")
+        raise ValueError(
+            "'allowed_languages' needs to be a list of valid language codes"
+        )
 
     return True

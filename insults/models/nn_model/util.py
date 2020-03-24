@@ -15,13 +15,14 @@ class LossHistory(keras.callbacks.Callback):
     """
     Record history of training
     """
+
     def on_train_begin(self, logs={}):
         self.losses = []
         self.accuracies = []
 
     def on_batch_end(self, batch, logs={}):
-        self.losses.append(logs.get('loss'))
-        self.accuracies.append(logs.get('acc'))
+        self.losses.append(logs.get("loss"))
+        self.accuracies.append(logs.get("acc"))
 
 
 def binarize(x, size=71):
@@ -33,9 +34,9 @@ def binarize_outshape(in_shape, size=71):
 
 
 def strip_html(s):
-    p = re.compile(r'<.*?>')
-    return p.sub('', s)
+    p = re.compile(r"<.*?>")
+    return p.sub("", s)
 
 
 def clean(s):
-    return re.sub(r'[^\x00-\x7f]', r'', s)
+    return re.sub(r"[^\x00-\x7f]", r"", s)

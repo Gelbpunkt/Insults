@@ -6,13 +6,14 @@ from insults.util import data_file
 from insults.nn_model.util import binarize, binarize_outshape, strip_html, clean
 
 
-def load_data(data_fp,  delimiter="\t"):
+def load_data(data_fp, delimiter="\t"):
     return pd.read_csv(data_fp, header=0, delimiter=delimiter, quoting=3)
 
+
 def load_insults_data(train, test):
-    df1 = pd.read_table(data_file('Inputs','train.csv'), sep=',')
-    df2 = pd.read_table(data_file('Inputs','test_with_solutions.csv'), sep=',')
-    df = pd.concat([df1,df2])
+    df1 = pd.read_table(data_file("Inputs", "train.csv"), sep=",")
+    df2 = pd.read_table(data_file("Inputs", "test_with_solutions.csv"), sep=",")
+    df = pd.concat([df1, df2])
 
     return df
 
@@ -25,7 +26,9 @@ def build_examples_with_their_targets(examples, targets):
     docs, sentences, targets_ = [], [], []
 
     for cont, target in zip(examples, targets):
-        sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', clean(strip_html(cont)))
+        sentences = re.split(
+            r"(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s", clean(strip_html(cont))
+        )
         sentences = [sent.lower() for sent in sentences]
         docs.append(sentences)
         targets_.append(target)
@@ -42,7 +45,7 @@ def sentence_count_per_doc(docs):
 
 
 def charset(docs):
-    txt = ''
+    txt = ""
     for doc in docs:
         for s in doc:
             txt += s
@@ -68,11 +71,13 @@ def shuffle_dataset(X, y):
 
     return X[ids], y[ids]
 
+
 def strip_quotes(comments):
     for c in comments:
         c[0] = c[0][1:-1]
 
     return comments
+
 
 def dataset_split(X, y, train_end=20000, test_start=22500):
     X_train = X[:train_end]
